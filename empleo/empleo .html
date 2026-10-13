@@ -3,764 +3,411 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Empleo Zacapu - Dirección de Desarrollo Económico</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome para iconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --guinda: #6B1426;
-            --guinda-oscuro: #4E0E1B;
-            --guinda-claro: #8C2138;
-            --dorado: #C2A649;
-            --fondo: #F9F9FB;
-            --texto: #333333;
-            --blanco: #FFFFFF;
-            --gris-claro: #E5E5E9;
+    <title>Bolsa de Empleo - Desarrollo Económico Zacapu</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        morena: {
+                            DEFAULT: '#6b1426', // Guinda institucional
+                            dark: '#520f1d',
+                            light: '#8a1d33',
+                            gold: '#d4af37'  // Dorado de acento
+                        }
+                    }
+                }
+            }
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        body {
-            background-color: var(--fondo);
-            color: var(--texto);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        /* Header institucional */
-        header {
-            background-color: var(--guinda);
-            color: var(--blanco);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 12px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo-text h1 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        .logo-text p {
-            font-size: 0.8rem;
-            color: #E0D0D4;
-        }
-
-        .admin-btn {
-            background-color: transparent;
-            border: 2px solid var(--dorado);
-            color: var(--blanco);
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .admin-btn:hover {
-            background-color: var(--dorado);
-            color: var(--guinda-oscuro);
-        }
-
-        /* Contenido Principal */
-        main {
-            max-width: 1200px;
-            width: 100%;
-            margin: 30px auto;
-            padding: 0 20px;
-            flex: 1;
-        }
-
-        .hero-section {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .hero-section h2 {
-            font-size: 2rem;
-            color: var(--guinda);
-            margin-bottom: 10px;
-        }
-
-        .hero-section p {
-            color: #666;
-            font-size: 1.05rem;
-        }
-
-        /* Buscador */
-        .search-bar {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 30px;
-        }
-
-        .search-bar input {
-            width: 100%;
-            max-width: 500px;
-            padding: 12px 20px;
-            border: 1px solid var(--gris-claro);
-            border-radius: 30px;
-            font-size: 1rem;
-            outline: none;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            transition: border-color 0.3s;
-        }
-
-        .search-bar input:focus {
-            border-color: var(--guinda);
-        }
-
-        /* Grid de Empleos */
-        .jobs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
-        }
-
-        .job-card {
-            background: var(--blanco);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-top: 5px solid var(--guinda);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .job-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(107, 20, 38, 0.1);
-        }
-
-        .job-img-container {
-            width: 100%;
-            height: 160px;
-            background-color: #f0f0f0;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .job-img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .job-content-padding {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            justify-content: space-between;
-        }
-
-        .job-title {
-            font-size: 1.25rem;
-            color: var(--guinda);
-            margin-bottom: 8px;
-            font-weight: 700;
-        }
-
-        .job-company {
-            font-size: 0.95rem;
-            color: #555;
-            font-weight: 600;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .job-details {
-            font-size: 0.9rem;
-            color: #666;
-            margin-bottom: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .job-details span i {
-            color: var(--guinda-claro);
-            width: 20px;
-        }
-
-        .job-desc {
-            font-size: 0.9rem;
-            color: #444;
-            margin-bottom: 20px;
-            line-height: 1.4;
-        }
-
-        .job-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid var(--gris-claro);
-            padding-top: 15px;
-            margin-top: auto;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .job-salary {
-            font-weight: 700;
-            color: var(--guinda-oscuro);
-            font-size: 1.05rem;
-        }
-
-        .btn-apply {
-            background-color: #25D366;
-            color: var(--blanco);
-            padding: 8px 14px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: background-color 0.2s;
-        }
-
-        .btn-apply:hover {
-            background-color: #1EBE5D;
-        }
-
-        /* Modal de Login de Administrador */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-box {
-            background: var(--blanco);
-            padding: 30px;
-            border-radius: 8px;
-            width: 100%;
-            max-width: 350px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-            border-top: 5px solid var(--guinda);
-        }
-
-        .modal-box h3 {
-            color: var(--guinda);
-            margin-bottom: 20px;
-            font-size: 1.3rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .modal-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        /* Panel de Administración */
-        .admin-panel {
-            display: none;
-            background: var(--blanco);
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            margin-bottom: 40px;
-            border: 1px solid var(--gris-claro);
-        }
-
-        .admin-panel h3 {
-            color: var(--guinda);
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .form-group.full-width {
-            grid-column: 1 / -1;
-        }
-
-        .form-group label {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--texto);
-        }
-
-        .form-group input, .form-group textarea {
-            padding: 10px 14px;
-            border: 1px solid var(--gris-claro);
-            border-radius: 4px;
-            font-size: 0.95rem;
-            outline: none;
-        }
-
-        .form-group input[type="file"] {
-            padding: 7px;
-            background: #fafafa;
-            cursor: pointer;
-        }
-
-        .form-group input:focus, .form-group textarea:focus {
-            border-color: var(--guinda);
-        }
-
-        .btn-save {
-            background-color: var(--guinda);
-            color: var(--blanco);
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .btn-save:hover {
-            background-color: var(--guinda-oscuro);
-        }
-
-        .admin-actions-cell {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-            border-top: 1px dashed var(--gris-claro);
-            padding-top: 10px;
-        }
-
-        .btn-edit {
-            background-color: #f0ad4e;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 0.8rem;
-        }
-
-        .btn-delete {
-            background-color: #d9534f;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 0.8rem;
-        }
-
-        footer {
-            background-color: var(--guinda-oscuro);
-            color: var(--blanco);
-            text-align: center;
-            padding: 20px;
-            margin-top: auto;
-            font-size: 0.9rem;
-        }
-
-        footer p {
-            color: #E0D0D4;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 40px;
-            color: #777;
-            grid-column: 1 / -1;
-        }
-    </style>
+    </script>
 </head>
-<body>
+<body class="bg-gray-50 min-h-screen flex flex-col justify-between">
 
-    <!-- Header -->
-    <header>
-        <div class="header-container">
-            <div class="logo-area">
-                <div class="logo-text">
-                    <h1>Empleo Zacapu</h1>
-                    <p>Dirección de Desarrollo Económico</p>
+    <!-- Encabezado Institucional con Logotipo -->
+    <header class="bg-morena text-white shadow-md border-b-4 border-morena-gold">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            
+            <!-- Logotipo Institucional y Títulos -->
+            <div class="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
+                <!-- Logotipo directamente sobre el fondo guinda -->
+                <img src="zacapu_logo.png" alt="Zacapu Gobierno de Transformación 2024-2027" class="h-16 md:h-20 w-auto object-contain">
+                <div>
+                    <span class="text-xs uppercase tracking-widest text-morena-gold font-semibold">Ayuntamiento de Zacapu, Michoacán</span>
+                    <h1 class="text-xl md:text-2xl font-bold">Dirección de Desarrollo Económico</h1>
+                    <p class="text-xs text-gray-200">Plataforma Oficial de Vinculación Laboral</p>
                 </div>
             </div>
-            <button class="admin-btn" id="openModalBtn">
-                <i class="fa-solid fa-lock"></i> Acceso Admin
-            </button>
+
+            <!-- Botones de Administración y Cerrar Sesión -->
+            <div class="flex items-center gap-3">
+                <button id="btn-abrir-admin" class="bg-morena-gold hover:bg-yellow-600 text-morena font-bold px-4 py-2 rounded-lg shadow transition duration-200 flex items-center gap-2 cursor-pointer text-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd" />
+                    </svg>
+                    Modo Administrador
+                </button>
+                <button id="btn-cerrar-sesion" class="hidden bg-red-700 hover:bg-red-800 text-white font-bold px-3 py-2 rounded-lg shadow transition duration-200 text-sm flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                    Salir
+                </button>
+            </div>
         </div>
     </header>
 
     <!-- Contenido Principal -->
-    <main>
-        <section class="hero-section">
-            <h2>Bolsa de Trabajo Municipal</h2>
-            <p>Encuentra oportunidades laborales o publica vacantes para tu empresa en Zacapu.</p>
-        </section>
-
-        <!-- Buscador -->
-        <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="Buscar por puesto, empresa o palabra clave...">
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-grow w-full">
+        <div class="text-center mb-10">
+            <h2 class="text-3xl font-extrabold text-gray-800">Ofertas de Empleo Disponibles</h2>
+            <p class="text-gray-600 mt-2">Encuentra oportunidades laborales en Zacapu y postúlate directamente vía WhatsApp.</p>
         </div>
 
-        <!-- Panel de Administración (Oculto por defecto) -->
-        <div class="admin-panel" id="adminPanel">
-            <h3>
-                <span>Panel de Administración de Vacantes</span>
-                <div>
-                    <button class="btn-edit" id="logoutAdminBtn" style="margin-right: 5px;"><i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</button>
-                    <button class="btn-delete" id="closeAdminBtn"><i class="fa-solid fa-xmark"></i> Ocultar</button>
-                </div>
-            </h3>
-            <form id="jobForm">
-                <input type="hidden" id="jobId">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="jobTitleInput">Puesto / Empleo</label>
-                        <input type="text" id="jobTitleInput" required placeholder="Ej. Auxiliar Administrativo">
-                    </div>
-                    <div class="form-group">
-                        <label for="jobCompanyInput">Empresa</label>
-                        <input type="text" id="jobCompanyInput" required placeholder="Ej. Comercializadora Zacapu">
-                    </div>
-                    <div class="form-group">
-                        <label for="jobLocationInput">Ubicación</label>
-                        <input type="text" id="jobLocationInput" required placeholder="Ej. Centro, Zacapu">
-                    </div>
-                    <div class="form-group">
-                        <label for="jobSalaryInput">Salario / Sueldo</label>
-                        <input type="text" id="jobSalaryInput" required placeholder="Ej. $8,000 mensuales">
-                    </div>
-                    <div class="form-group">
-                        <label for="jobPhoneInput">WhatsApp de Contacto</label>
-                        <input type="text" id="jobPhoneInput" required placeholder="Ej. 4363420000">
-                    </div>
-                    <div class="form-group">
-                        <label for="jobImageInput">Imagen o Logo (Opcional - Máx 1MB)</label>
-                        <input type="file" id="jobImageInput" accept="image/*">
-                    </div>
-                    <div class="form-group full-width">
-                        <label for="jobDescInput">Descripción de la Vacante</label>
-                        <textarea id="jobDescInput" rows="3" required placeholder="Requisitos, horario y detalles del puesto..."></textarea>
-                    </div>
-                </div>
-                <button type="submit" class="btn-save"><i class="fa-solid fa-save"></i> Guardar Vacante</button>
-            </form>
-        </div>
-
-        <!-- Grid de Empleos -->
-        <div class="jobs-grid" id="jobsGrid">
-            <!-- Las vacantes se cargarán dinámicamente aquí -->
+        <!-- Contenedor de Ofertas de Trabajo -->
+        <div id="contenedor-empleos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <p class="col-span-full text-center text-gray-500 py-10">Cargando ofertas de empleo...</p>
         </div>
     </main>
 
-    <!-- Modal de Login de Administrador -->
-    <div class="modal-overlay" id="loginModal">
-        <div class="modal-box">
-            <h3><i class="fa-solid fa-lock"></i> Iniciar Sesión</h3>
-            <form id="loginForm">
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label for="adminPassword">Contraseña de Administrador</label>
-                    <input type="password" id="adminPassword" required placeholder="Ingresa la contraseña">
-                </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn-delete" id="closeModalBtn">Cancelar</button>
-                    <button type="submit" class="btn-save">Ingresar</button>
-                </div>
-            </form>
+    <!-- Pie de Página -->
+    <footer class="bg-gray-800 text-white text-center py-6 mt-12 border-t border-gray-700">
+        <p class="text-sm">Desarrollo Económico Zacapu, Michoacán &copy; 2026</p>
+        <p class="text-xs text-gray-400 mt-1">Transformando la economía local juntos.</p>
+    </footer>
+
+    <!-- MODAL: Contraseña de Administrador -->
+    <div id="modal-login" class="fixed inset-0 bg-black bg-opacity-50 hidden flex justify-center items-center z-50 px-4">
+        <div class="bg-white rounded-xl max-w-md w-full p-6 shadow-2xl relative">
+            <h3 class="text-xl font-bold text-morena mb-4">Acceso de Administrador</h3>
+            <p class="text-sm text-gray-600 mb-4">Ingrese la contraseña para gestionar las ofertas de empleo.</p>
+            <input type="password" id="input-password" placeholder="Contraseña" class="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4 focus:outline-none focus:border-morena">
+            <div class="flex justify-end gap-3">
+                <button id="btn-cancelar-login" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">Cancelar</button>
+                <button id="btn-entrar-login" class="px-4 py-2 bg-morena text-white rounded-lg hover:bg-morena-dark transition">Entrar</button>
+            </div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 H. Ayuntamiento de Zacapu - Dirección de Desarrollo Económico</p>
-    </footer>
+    <!-- MODAL: Panel de Administración (Agregar / Editar Ofertas) -->
+    <div id="modal-admin" class="fixed inset-0 bg-black bg-opacity-50 hidden flex justify-center items-center z-50 px-4 overflow-y-auto">
+        <div class="bg-white rounded-xl max-w-2xl w-full p-6 shadow-2xl relative my-8">
+            <div class="flex justify-between items-center mb-4 border-b pb-3">
+                <h3 id="modal-admin-titulo" class="text-xl font-bold text-morena">Panel de Administración - Agregar Empleo</h3>
+                <button id="btn-cerrar-panel" class="text-gray-500 hover:text-gray-700 font-bold text-xl">&times;</button>
+            </div>
 
-    <script>
-        const PASSWORD_ADMIN = 'Zacapu2026*';
+            <!-- Formulario de Registro / Edición -->
+            <form id="form-empleo" class="space-y-4">
+                <input type="hidden" id="empleo-id">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700">Nombre de la Empresa</label>
+                    <input type="text" id="empresa" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-morena">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700">Puesto</label>
+                    <input type="text" id="puesto" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-morena">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700">Domicilio</label>
+                    <input type="text" id="domicilio" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-morena">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700">Sueldo</label>
+                    <input type="text" id="sueldo" placeholder="Ej. $8,000 mensuales / A convenir" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-morena">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700">Imagen de la Vacante (Subir archivo)</label>
+                    <input type="file" id="imagen-file" accept="image/*" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-morena bg-white text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-morena file:text-white hover:file:bg-morena-dark cursor-pointer">
+                    <p class="text-xs text-gray-500 mt-1">Selecciona una imagen desde tu dispositivo (se guardará optimizada).</p>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700">Descripción del Puesto</label>
+                    <textarea id="descripcion" rows="3" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-morena"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700">WhatsApp para enviar C.V. (Ej: 524341234567)</label>
+                    <input type="text" id="whatsapp" placeholder="524341234567" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-morena">
+                </div>
+                <div class="flex justify-between items-center pt-4">
+                    <button type="button" id="btn-cancelar-edicion" class="hidden px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition text-sm">Cancelar Edición</button>
+                    <div class="flex gap-3 ml-auto">
+                        <button type="button" id="btn-cerrar-panel-footer" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">Cerrar</button>
+                        <button type="submit" id="btn-submit-empleo" class="px-4 py-2 bg-morena text-white rounded-lg hover:bg-morena-dark transition font-semibold">Publicar Oferta</button>
+                    </div>
+                </div>
+            </form>
 
-        const openModalBtn = document.getElementById('openModalBtn');
-        const loginModal = document.getElementById('loginModal');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        const loginForm = document.getElementById('loginForm');
-        const adminPanel = document.getElementById('adminPanel');
-        const closeAdminBtn = document.getElementById('closeAdminBtn');
-        const logoutAdminBtn = document.getElementById('logoutAdminBtn');
-        const jobForm = document.getElementById('jobForm');
-        const jobsGrid = document.getElementById('jobsGrid');
-        const searchInput = document.getElementById('searchInput');
+            <!-- Lista para gestionar ofertas existentes (Editar / Eliminar) -->
+            <div class="mt-8 border-t pt-6">
+                <h4 class="text-lg font-bold text-gray-800 mb-3">Ofertas Publicadas (Gestionar)</h4>
+                <div id="lista-admin-empleos" class="space-y-2 max-h-48 overflow-y-auto">
+                    <!-- Se llena dinámicamente -->
+                </div>
+            </div>
+        </div>
+    </div>
 
-        let isAdminLoggedIn = false;
-        let jobs = [];
+    <!-- Script de Lógica y Firebase -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, updateDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        try {
-            const savedJobs = localStorage.getItem('zacapu_jobs');
-            if (savedJobs) {
-                jobs = JSON.parse(savedJobs);
+        const firebaseConfig = {
+            apiKey: "AIzaSyDV6UAIZkZQZBQzIRAPbPDQOXlVEuor1X0",
+            authDomain: "empleo-zacapu.firebaseapp.com",
+            projectId: "empleo-zacapu",
+            storageBucket: "empleo-zacapu.firebasestorage.app",
+            messagingSenderId: "872513968823",
+            appId: "1:872513968823:web:61a1dc61394b54c2bb0b32",
+            measurementId: "G-BJEJPC9BSG"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let esAdmin = false;
+        let imagenBase64Actual = "";
+
+        function abrirModalAdmin() {
+            if (esAdmin) {
+                document.getElementById('modal-admin').classList.remove('hidden');
+                cargarEmpleosAdmin();
+            } else {
+                document.getElementById('modal-login').classList.remove('hidden');
             }
-        } catch (error) {
-            console.error("Error al cargar localStorage:", error);
-            jobs = [];
         }
 
-        // Control del botón principal de acceso
-        openModalBtn.addEventListener('click', () => {
-            if (isAdminLoggedIn) {
-                adminPanel.style.display = adminPanel.style.display === 'block' ? 'none' : 'block';
+        function cerrarModalLogin() {
+            document.getElementById('modal-login').classList.add('hidden');
+            document.getElementById('input-password').value = '';
+        }
+
+        function verificarPassword() {
+            const pass = document.getElementById('input-password').value;
+            if (pass === "20260103") {
+                esAdmin = true;
+                cerrarModalLogin();
+                document.getElementById('btn-cerrar-sesion').classList.remove('hidden');
+                document.getElementById('modal-admin').classList.remove('hidden');
+                cargarEmpleosAdmin();
             } else {
-                loginModal.style.display = 'flex';
+                alert("Contraseña incorrecta");
             }
-        });
+        }
 
-        closeModalBtn.addEventListener('click', () => {
-            loginModal.style.display = 'none';
-        });
+        function cerrarSesionAdmin() {
+            esAdmin = false;
+            document.getElementById('btn-cerrar-sesion').classList.add('hidden');
+            alert("Has cerrado sesión del modo administrador correctamente.");
+        }
 
-        closeAdminBtn.addEventListener('click', () => {
-            adminPanel.style.display = 'none';
-        });
+        function cerrarPanelAdmin() {
+            document.getElementById('modal-admin').classList.add('hidden');
+            resetearFormulario();
+        }
 
-        // Cerrar sesión
-        logoutAdminBtn.addEventListener('click', () => {
-            isAdminLoggedIn = false;
-            adminPanel.style.display = 'none';
-            openModalBtn.innerHTML = '<i class="fa-solid fa-lock"></i> Acceso Admin';
-            renderJobs();
-            alert('Sesión de administrador cerrada correctamente.');
-        });
+        function resetearFormulario() {
+            document.getElementById('form-empleo').reset();
+            document.getElementById('empleo-id').value = '';
+            document.getElementById('modal-admin-titulo').innerText = "Panel de Administración - Agregar Empleo";
+            document.getElementById('btn-submit-empleo').innerText = "Publicar Oferta";
+            document.getElementById('btn-cancelar-edicion').classList.add('hidden');
+            imagenBase64Actual = "";
+        }
 
-        // Ingresar contraseña en el modal
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const pass = document.getElementById('adminPassword').value;
-            
-            if(pass === PASSWORD_ADMIN) {
-                isAdminLoggedIn = true;
-                loginModal.style.display = 'none';
-                adminPanel.style.display = 'block';
-                document.getElementById('adminPassword').value = '';
-                openModalBtn.innerHTML = '<i class="fa-solid fa-unlock"></i> Panel Admin';
-                renderJobs();
-            } else {
-                alert('Contraseña incorrecta');
-            }
-        });
-
-        // Guardar o Actualizar Vacante (Valida que la sesión esté activa)
-        jobForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            if (!isAdminLoggedIn) {
-                adminPanel.style.display = 'none';
-                loginModal.style.display = 'flex';
-                alert('Debe iniciar sesión como administrador para guardar cambios.');
-                return;
-            }
-
-            const id = document.getElementById('jobId').value;
-            const title = document.getElementById('jobTitleInput').value.trim();
-            const company = document.getElementById('jobCompanyInput').value.trim();
-            const location = document.getElementById('jobLocationInput').value.trim();
-            const salary = document.getElementById('jobSalaryInput').value.trim();
-            const phone = document.getElementById('jobPhoneInput').value.trim();
-            const desc = document.getElementById('jobDescInput').value.trim();
-            const imageInput = document.getElementById('jobImageInput');
-
-            const saveJobData = (imageUrl) => {
-                try {
-                    if (id) {
-                        jobs = jobs.map(job => job.id == id ? {
-                            ...job, title, company, location, salary, phone, desc, 
-                            image: imageUrl !== undefined ? imageUrl : job.image 
-                        } : job);
-                    } else {
-                        const newJob = {
-                            id: Date.now(),
-                            title, company, location, salary, phone, desc,
-                            image: imageUrl || ''
-                        };
-                        jobs.push(newJob);
-                    }
-
-                    localStorage.setItem('zacapu_jobs', JSON.stringify(jobs));
-                    jobForm.reset();
-                    document.getElementById('jobId').value = '';
-                    adminPanel.style.display = 'none';
-                    renderJobs();
-                    alert('¡Vacante guardada correctamente!');
-                } catch (err) {
-                    alert('Error al guardar: es posible que la imagen sea demasiado pesada para la memoria del navegador.');
-                }
-            };
-
-            if (imageInput.files && imageInput.files[0]) {
-                const file = imageInput.files[0];
-                if (file.size > 1024 * 1024) {
-                    alert('La imagen es demasiado pesada. Selecciona una de menos de 1 MB.');
-                    return;
-                }
+        // Convertir imagen seleccionada a Base64 para almacenarla directo en Firestore
+        function convertirImagenABase64(file) {
+            return new Promise((resolve, reject) => {
                 const reader = new FileReader();
-                reader.onload = function(e) {
-                    saveJobData(e.target.result);
-                };
                 reader.readAsDataURL(file);
-            } else {
-                const existingJob = jobs.find(j => j.id == id);
-                saveJobData(existingJob ? existingJob.image : '');
-            }
-        });
-
-        // Renderizar vacantes
-        function renderJobs(filterText = '') {
-            jobsGrid.innerHTML = '';
-            
-            const filteredJobs = jobs.filter(job => 
-                job.title.toLowerCase().includes(filterText.toLowerCase()) ||
-                job.company.toLowerCase().includes(filterText.toLowerCase()) ||
-                job.desc.toLowerCase().includes(filterText.toLowerCase())
-            );
-
-            if (filteredJobs.length === 0) {
-                jobsGrid.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fa-solid fa-briefcase fa-3x" style="margin-bottom: 15px; color: var(--dorado);"></i>
-                        <p>No hay vacantes registradas o que coincidan con la búsqueda.</p>
-                    </div>
-                `;
-                return;
-            }
-
-            filteredJobs.forEach(job => {
-                const card = document.createElement('div');
-                card.className = 'job-card';
-                
-                let imageHtml = '';
-                if (job.image) {
-                    imageHtml = `<div class="job-img-container"><img src="${job.image}" alt="Logo empresa"></div>`;
-                }
-
-                card.innerHTML = `
-                    ${imageHtml}
-                    <div class="job-content-padding">
-                        <div>
-                            <h3 class="job-title">${job.title}</h3>
-                            <div class="job-company"><i class="fa-solid fa-building"></i> ${job.company}</div>
-                            <div class="job-details">
-                                <span><i class="fa-solid fa-location-dot"></i> ${job.location}</span>
-                            </div>
-                            <p class="job-desc">${job.desc}</p>
-                        </div>
-                        <div>
-                            <div class="job-footer">
-                                <span class="job-salary">${job.salary}</span>
-                                <a href="https://wa.me/52${job.phone}?text=Hola,%20me%20interesa%20la%20vacante%20de%20${encodeURIComponent(job.title)}" target="_blank" class="btn-apply">
-                                    <i class="fa-brands fa-whatsapp"></i> Postularse
-                                </a>
-                            </div>
-                            ${isAdminLoggedIn ? `
-                                <div class="admin-actions-cell">
-                                    <button class="btn-edit" onclick="editJob(${job.id})"><i class="fa-solid fa-pen"></i> Editar</button>
-                                    <button class="btn-delete" onclick="deleteJob(${job.id})"><i class="fa-solid fa-trash"></i> Eliminar</button>
-                                </div>
-                            ` : ''}
-                        </div>
-                    </div>
-                `;
-                jobsGrid.appendChild(card);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
             });
         }
 
-        window.editJob = function(id) {
-            if (!isAdminLoggedIn) {
-                loginModal.style.display = 'flex';
-                return;
-            }
-            const job = jobs.find(j => j.id == id);
-            if (job) {
-                document.getElementById('jobId').value = job.id;
-                document.getElementById('jobTitleInput').value = job.title;
-                document.getElementById('jobCompanyInput').value = job.company;
-                document.getElementById('jobLocationInput').value = job.location;
-                document.getElementById('jobSalaryInput').value = job.salary;
-                document.getElementById('jobPhoneInput').value = job.phone;
-                document.getElementById('jobDescInput').value = job.desc;
-                adminPanel.style.display = 'block';
-                window.scrollTo({ top: adminPanel.offsetTop - 20, behavior: 'smooth' });
-            }
-        };
+        function escucharEmpleos() {
+            const contenedor = document.getElementById('contenedor-empleos');
+            onSnapshot(collection(db, "empleos"), (snapshot) => {
+                contenedor.innerHTML = "";
+                if (snapshot.empty) {
+                    contenedor.innerHTML = `<p class="col-span-full text-center text-gray-500 py-10">No hay ofertas de empleo publicadas en este momento.</p>`;
+                    return;
+                }
+                snapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    const id = docSnap.id;
+                    
+                    const imagenSrc = data.imagen && data.imagen.trim() !== "" ? data.imagen : "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&q=80&w=600";
 
-        window.deleteJob = function(id) {
-            if (!isAdminLoggedIn) {
-                loginModal.style.display = 'flex';
+                    const card = document.createElement('div');
+                    card.className = "bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 hover:shadow-lg transition flex flex-col justify-between";
+                    card.innerHTML = `
+                        <div>
+                            <div class="h-40 w-full overflow-hidden bg-gray-100">
+                                <img src="${imagenSrc}" alt="Imagen del empleo" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-6">
+                                <span class="text-xs font-semibold uppercase px-2.5 py-1 bg-red-100 text-morena rounded-full">${data.empresa}</span>
+                                <h3 class="text-xl font-bold text-gray-800 mt-3">${data.puesto}</h3>
+                                <p class="text-sm text-gray-600 mt-1 flex items-center gap-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                    ${data.domicilio}
+                                </p>
+                                <p class="text-sm font-semibold text-green-700 mt-2">Sueldo: ${data.sueldo}</p>
+                                <p class="text-gray-700 text-sm mt-3 border-t pt-3">${data.descripcion}</p>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6 pt-2">
+                            <a href="https://wa.me/${data.whatsapp}?text=Hola,%20me%20interesa%20la%20vacante%20de%20${encodeURIComponent(data.puesto)}%20publicada%20por%20Desarrollo%20Económico%20Zacapu." target="_blank" class="block w-full text-center bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-lg transition duration-200 flex items-center justify-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                                Postularse vía WhatsApp
+                            </a>
+                        </div>
+                    `;
+                    contenedor.appendChild(card);
+                });
+            });
+        }
+
+        async function guardarEmpleo(e) {
+            e.preventDefault();
+            const id = document.getElementById('empleo-id').value;
+            const fileInput = document.getElementById('imagen-file');
+            
+            let imagenUrl = imagenBase64Actual;
+            if (fileInput.files && fileInput.files[0]) {
+                imagenUrl = await convertirImagenABase64(fileInput.files[0]);
+            }
+
+            const datosEmpleo = {
+                empresa: document.getElementById('empresa').value,
+                puesto: document.getElementById('puesto').value,
+                domicilio: document.getElementById('domicilio').value,
+                sueldo: document.getElementById('sueldo').value,
+                imagen: imagenUrl,
+                descripcion: document.getElementById('descripcion').value,
+                whatsapp: document.getElementById('whatsapp').value
+            };
+
+            try {
+                if (id) {
+                    await updateDoc(doc(db, "empleos", id), datosEmpleo);
+                    alert("¡Oferta de empleo actualizada exitosamente!");
+                } else {
+                    datosEmpleo.fecha = new Date();
+                    await addDoc(collection(db, "empleos"), datosEmpleo);
+                    alert("¡Oferta de empleo agregada exitosamente!");
+                }
+                resetearFormulario();
+                cargarEmpleosAdmin();
+            } catch (error) {
+                console.error("Error al guardar empleo: ", error);
+                alert("Hubo un error al guardar el empleo.");
+            }
+        }
+
+        async function cargarEmpleosAdmin() {
+            const listaDiv = document.getElementById('lista-admin-empleos');
+            listaDiv.innerHTML = "Cargando...";
+            const querySnapshot = await getDocs(collection(db, "empleos"));
+            listaDiv.innerHTML = "";
+            
+            if (querySnapshot.empty) {
+                listaDiv.innerHTML = "<p class='text-sm text-gray-500'>No hay ofertas registradas.</p>";
                 return;
             }
-            if (confirm('¿Estás seguro de eliminar esta vacante?')) {
-                jobs = jobs.filter(j => j.id != id);
+
+            querySnapshot.forEach((docSnap) => {
+                const data = docSnap.data();
+                const id = docSnap.id;
+
+                const item = document.createElement('div');
+                item.className = "flex justify-between items-center bg-gray-50 p-3 rounded-lg border";
+                
+                const dataStr = encodeURIComponent(JSON.stringify({
+                    id,
+                    empresa: data.empresa || '',
+                    puesto: data.puesto || '',
+                    domicilio: data.domicilio || '',
+                    sueldo: data.sueldo || '',
+                    imagen: data.imagen || '',
+                    descripcion: data.descripcion || '',
+                    whatsapp: data.whatsapp || ''
+                }));
+
+                item.innerHTML = `
+                    <div>
+                        <p class="font-bold text-sm text-gray-800">${data.puesto} <span class="text-xs font-normal text-gray-500">(${data.empresa})</span></p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button data-editar="${dataStr}" class="btn-editar bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-3 py-1.5 rounded transition">
+                            Editar
+                        </button>
+                        <button data-eliminar="${id}" class="btn-eliminar bg-red-600 hover:bg-red-700 text-white text-xs font-semibold px-3 py-1.5 rounded transition">
+                            Eliminar
+                        </button>
+                    </div>
+                `;
+                listaDiv.appendChild(item);
+            });
+
+            // Asignar eventos a los botones generados dinámicamente de editar y eliminar
+            document.querySelectorAll('.btn-editar').forEach(btn => {
+                btn.addEventListener('click', () => prepararEdicion(btn.getAttribute('data-editar')));
+            });
+
+            document.querySelectorAll('.btn-eliminar').forEach(btn => {
+                btn.addEventListener('click', () => eliminarEmpleo(btn.getAttribute('data-eliminar')));
+            });
+        }
+
+        function prepararEdicion(encodedData) {
+            const data = JSON.parse(decodeURIComponent(encodedData));
+            
+            document.getElementById('empleo-id').value = data.id;
+            document.getElementById('empresa').value = data.empresa;
+            document.getElementById('puesto').value = data.puesto;
+            document.getElementById('domicilio').value = data.domicilio;
+            document.getElementById('sueldo').value = data.sueldo;
+            document.getElementById('descripcion').value = data.descripcion;
+            document.getElementById('whatsapp').value = data.whatsapp;
+            
+            imagenBase64Actual = data.imagen;
+            
+            document.getElementById('modal-admin-titulo').innerText = "Panel de Administración - Editar Empleo";
+            document.getElementById('btn-submit-empleo').innerText = "Guardar Cambios";
+            document.getElementById('btn-cancelar-edicion').classList.remove('hidden');
+            
+            document.querySelector('#modal-admin > div').scrollTop = 0;
+        }
+
+        async function eliminarEmpleo(id) {
+            if (confirm("¿Estás seguro de eliminar esta oferta de empleo?")) {
                 try {
-                    localStorage.setItem('zacapu_jobs', JSON.stringify(jobs));
-                } catch(e) {}
-                renderJobs(searchInput.value);
-                alert('Vacante eliminada correctamente.');
+                    await deleteDoc(doc(db, "empleos", id));
+                    alert("Oferta eliminada correctamente.");
+                    cargarEmpleosAdmin();
+                } catch (error) {
+                    console.error("Error al eliminar: ", error);
+                    alert("No se pudo eliminar la oferta.");
+                }
             }
-        };
+        }
 
-        searchInput.addEventListener('input', (e) => {
-            renderJobs(e.target.value);
-        });
+        // Conexión limpia de eventos por listeners (evita problemas de ámbito en módulos)
+        document.getElementById('btn-abrir-admin').addEventListener('click', abrirModalAdmin);
+        document.getElementById('btn-cerrar-sesion').addEventListener('click', cerrarSesionAdmin);
+        document.getElementById('btn-cancelar-login').addEventListener('click', cerrarModalLogin);
+        document.getElementById('btn-entrar-login').addEventListener('click', verificarPassword);
+        document.getElementById('btn-cerrar-panel').addEventListener('click', cerrarPanelAdmin);
+        document.getElementById('btn-cerrar-panel-footer').addEventListener('click', cerrarPanelAdmin);
+        document.getElementById('btn-cancelar-edicion').addEventListener('click', resetearFormulario);
+        document.getElementById('form-empleo').addEventListener('submit', guardarEmpleo);
 
-        renderJobs();
+        // Inicializar escucha de empleos en tiempo real
+        escucharEmpleos();
     </script>
 </body>
 </html>
